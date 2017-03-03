@@ -1,0 +1,84 @@
+//-  测试盒列表正面mixins
+
+mixin headline
+  .pb-8(layout='row', layout-align='space-between center' ng-if="box.execution")
+    .h4.font-weight-500.secondary-text(flex="25") {{box.name}}
+    .test-plan-name(flex="45") {{box.plan.name}}
+    md-icon.s16.m-5(md-font-icon="icon-radiobox-marked")
+    a.box-detail.m-5(ng-click='vm.goToBoxDetail(box._id)' title='测试盒详情')
+      md-icon.s16(md-font-icon="icon-eye")
+    +menu(true)
+  .pb-8(layout="row", layout-align='space-between center' ng-if="!box.execution").newBox
+    .h4.font-weight-500.secondary-text(flex="30") {{ box.name }}
+    .h4 暂无测试记录
+mixin front-content
+  .mt-20
+    +in-testing-front
+    +idle-front
+    +brand-new
+
+mixin in-testing-front
+  div(ng-if='box.execution && !box.execution.result' layout='column' layout-align='space-between')
+    div.mb-5(layout='row', layout-align='space-between center')
+      .tester
+        span.label 测试员:
+        span.content {{ box.execution.executionCreator.username }}
+      .status
+        span.label 状态:
+        span.content {{ box.currentStep._id }} / {{ box.plan.steps.length }}
+    .pb-16
+      md-progress-linear(md-mode='determinate', value='{{ box.currentStep._id / box.plan.steps.length * 100 }}')
+    div.mt-5(layout='row', layout-align='space-between center')
+      .start-time
+        span.label 开始于:
+        span.content {{box.execution.startTime | dateTimeShort}}
+      .end-time
+        span.label 预计结束时长:
+        span.content {{box.execution.estimateEndTime}}
+
+mixin idle-front
+  div(ng-if='box.execution.result' layout='column' layout-align='space-between')
+    div(layout='row', layout-align='space-between center')
+      .tester
+        span.label 测试员:
+        span.content {{box.execution.executionCreator.username}}
+      .status
+        span.label 结果:
+        span.content {{ box.execution.result }}
+    div.mt-10(layout='row', layout-align='space-between center')
+      .end-time
+        span.label 测试完成:
+        span.content(title="{{ box.execution.endTime | calendar }}") {{ box.execution.endTime | dateTimeShort }}
+      +execute-new-test-button
+
+mixin execute-new-test-button
+  a(ng-click='vm.goToNewExecution(box._id)' layout='column')
+    md-button.md-primary(title='执行新测试')
+      md-icon(md-font-icon='icon-flash')
+      | 新测试
+
+mixin brand-new
+  div(ng-if='!box.execution' layout='column' layout-align='space-between')
+    +execute-new-test-button
+
+mixin menu(needFlip)
+  md-menu(ng-if='box.execution')
+    md-button.md-icon-button(aria-label='more', ng-click='$mdOpenMenu($event)')
+      md-icon(md-font-icon='icon-dots-vertical')
+    md-menu-content
+      if needFlip
+        +menu-item-flip
+      +menu-item-refresh
+
+//- 下拉框：Details
+mixin menu-item-flip
+  md-menu-item
+    md-button(ng-click='flipWidget()', aria-label='Flip widget')
+      | Details
+
+//- 下拉框：Refresh
+mixin menu-item-refresh
+  md-menu-item
+    md-button(ng-click='refreshWidget()', aria-label='Refresh widget')
+      | Refresh
+

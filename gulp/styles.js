@@ -1,0 +1,66 @@
+'use strict';
+
+var path = require('path');
+var gulp = require('gulp');
+var conf = require('./config');
+
+var browserSync = require('browser-sync');
+
+var $ = require('gulp-load-plugins')();
+
+var wiredep = require('wiredep').stream;
+var _ = require('lodash');
+
+gulp.task('styles-reload', ['styles'], function ()
+{
+    return buildStyles()
+        .pipe(browserSync.stream());
+});
+
+gulp.task('styles', function ()
+{
+    return buildStyles();
+});
+
+
+/**
+ * 编译sass和scss文件，注入到index.css，放到/.tmp/serve/app/目录下
+ */
+var buildStyles = function ()
+{
+    var sassOptions = {
+        style: 'expanded'
+    };
+
+    var injectFiles = gulp.src([
+        path.join(conf.paths.src, '/app/core/scss/**/*.scss'),
+        path.join(conf.paths.src, '/app/core/**/*.scss'),
+        path.join(conf.paths.src, '/app/**/*.{scss,sass}'),
+        path.join('!' + conf.paths.src, '/app/main/components/material-docs/demo-partials/**/*.scss'),
+        path.join('!' + conf.paths.src, '/app/core/scss/partials/**/*.scss'),
+        path.join('!' + conf.paths.src, '/app/index.sass')
+    ], {read: false});
+
+    var injectOptions = {
+        transform   : function (filePath)
+        {
+            filePath = filePath.replace(conf.paths.src + '/app/', '');
+            return '@import "' + filePath + '";';
+        },
+        starttag    : '// injector',
+        endtag      : '// endinjector',
+        addRootSlash: false
+    };
+
+    return gulp.src([
+            path.join(conf.paths.src, '/app/index.sass')
+        ])
+        .pipe($.inject(injectFiles, injectOptions))
+        .pipe(wiredep(_.extend({}, conf.wiredep)))
+        .pipe($.sourcemaps.init())
+        .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
+        .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
+        .pipe($.sourcemaps.write())
+        // .pipe(gulp.dest(path.join(conf.paths.public, '/app/')));
+        .pipe(gulp.dest('app/'));
+};

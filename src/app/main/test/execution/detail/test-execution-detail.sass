@@ -1,0 +1,37 @@
+#test-execution-detail
+  .circuit-board
+    .input-pin-lines, .output-pin-lines
+      .pin
+        border-bottom: 4px black solid
+    .input-pin-names, .output-pin-names, .input-pin-datas, .output-pin-datas
+      line-height: 28px
+      position: relative
+      top: 12px
+    .input-pin-names
+        right: 37%
+    .input-pin-datas
+        right: 58%
+    .output-pin-names
+        right: 26%
+    .output-pin-datas
+        right: 13%
+    .board
+      writing-mode: vertical-rl
+      border: 6px black solid
+
+  .execution-steps
+    .execution-step
+      width: 19%
+      color: black
+      &.ended, &.pass
+        background-color: #DDD
+      &.pending
+        background-color: #cce6ff
+      &.active
+        background-color: #4da9ff
+      &.fail
+        background-color: #f08080
+
+  .download
+    line-height: 30px
+

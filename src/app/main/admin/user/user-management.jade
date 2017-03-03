@@ -1,0 +1,41 @@
+#simple-table.page-layout.simple.fullwidth.doc-page.element-doc-page
+  .header.md-accent-bg(layout='row', layout-align='space-between')
+    div(layout='column', layout-align='center start')
+      .title 用户管理
+
+  .content
+    .white-bg.md-whiteframe-4dp
+      .add-user-buttons(layout='row')
+        .add-new-user(layout="row")
+          md-button(aria-label="add-new-user", ng-click='vm.addNewUserDialog($event)')
+            md-icon.md-accent(md-font-icon="icon-plus-circle")
+            span.ml-10 添加新用户
+
+        .add-new-user(layout="row")
+          md-button(aria-label="add-user-set", ng-click='vm.addUserSetDialog($event)')
+            md-icon.md-accent(md-font-icon="icon-plus-circle")
+            span.ml-10 批量生成用户
+
+      table.dataTable.row-border.hover(datatable='ng', dt-options='vm.dtOptions')
+        thead
+          tr
+            th.secondary-text
+              .table-header
+                span.column-title 用户名
+            th.secondary-text
+              .table-header
+                span.column-title 密码
+            th.secondary-text
+              .table-header
+                span.column-title 所属组织
+            th.secondary-text
+              .table-header
+                span.column-title 创建时间
+
+        tbody
+          tr(ng-repeat='user in vm.users')
+            td {{ user.username }}
+            td {{ user.password }}
+            td {{ user.company }}
+            td {{ user.createTime }}
+

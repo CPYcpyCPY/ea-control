@@ -1,0 +1,83 @@
+mixin head
+  div.header.md-accent-bg(layout='column' layout-align='start start')
+    md-button.return(layout layout-align='start center' ng-click="vm.returnToPlanList()")
+      md-icon.s16.separator(md-font-icon='icon-chevron-left')
+      span.breadcrumb 返回 测试计划列表
+    .title 测试计划详情
+
+mixin summary-head
+  div.mt-35.mb-5.ml-20(layout layout-align='start center')
+    .md-headline 基本信息
+    md-button(layout ng-click="vm.goToCreateExecution(vm.plan._id)", ng-disabled='vm.plan.status == "editable"')
+      md-icon.md-accent(md-font-icon="icon-flash" aria-label="execute-pan")
+      span 执行当前计划
+    md-button.download-script
+      label(ng-click="vm.downloadPlanDoc($event)")
+        md-icon.md-accent(md-font-icon="icon-download")
+        span 下载测试文档
+    md-button.upload-script(ng-if='vm.currentUser.role == "admin"')
+      label(for='script')
+        md-icon.md-accent(md-font-icon="icon-upload")
+        span 上传测试脚本
+        input(ng-hide='true' id ='script' type="file" ngf-select="vm.uploadPlanScript($file, $invalidFiles)" required)
+
+mixin summary-content
+  div.md-whiteframe-2dp.m-10(layout-wrap)
+    div(flex='75' layout='row' layout-align='space-around center')
+      p.md-subhead.pl-20(flex) 计划名称：
+        span &nbsp; {{ vm.plan.name }}
+      p.md-subhead.pl-20(flex) 类型：
+        span &nbsp; {{ vm.plan.type }}
+      p.md-subhead.pl-20(flex) 计划创建者：
+        span &nbsp; {{ vm.plan.docCreator.username }}
+    div(flex='100' layout='row' layout-align='space-around center')
+      p.md-subhead.pl-20(flex) 平均用时：
+        span &nbsp; {{ vm.plan.timeToExecute }}
+      p.md-subhead.pl-20(flex) 成功率：
+        span &nbsp; {{ vm.plan.successRate }}%
+      p.md-subhead.pl-20(flex) 人工操作：
+        span &nbsp; {{ vm.plan.manualOperationFrequency }}
+      p.md-subhead.pl-20(flex) 状态：
+        span &nbsp; {{ vm.plan.status }}
+
+
+mixin plan-execution-history
+  .md-headline.mt-35.mb-5.ml-20 执行记录
+  .white-bg.md-whiteframe-4dp.m-10
+    table.dataTable.row-border.hover(datatable="ng" dt-options="vm.dtOptions")
+      thead
+        tr
+          th.secondary-text
+            .table-header
+              span.column-title 测试盒
+          th.secondary-text
+            .table-header
+              span.column-title 测试员
+          th.secondary-text
+            .table-header
+              span.column-title 状态
+          th.secondary-text
+            .table-header
+              span.column-title 开始时间
+          th.secondary-text
+            .table-header
+              span.column-title 结束时间
+      tbody
+        tr(ng-repeat="execution in vm.plan.executions" ng-click="vm.goToDetail(execution._id)")
+          td {{execution.eaBox.name}}
+          td {{execution.executionCreator.username}}
+          td {{execution.result}}
+          td {{execution.startTime | dateTimeFull}}
+          td {{execution.endTime | dateTimeFull}}
+
+
+mixin summary
+  +summary-head
+  +summary-content
+
+
+//- PAGE
+#test-plan-detail.page-layout.simple.fullwidth.doc-page.element-doc-page
+  +head
+  +summary
+  +plan-execution-history

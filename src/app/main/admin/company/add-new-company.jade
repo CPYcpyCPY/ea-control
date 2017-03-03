@@ -1,0 +1,18 @@
+md-dialog(aria-label='add-new-user' flex=50)
+  md-toolbar.md-accent
+    .md-toolbar-tools
+      | 添加新组织
+    span(flex)
+  .content.md-padding(layout='column')
+    form(layout='column')
+      md-input-container
+        label 组织名称
+        input
+      md-input-container
+        label 负责人
+        input
+      md-input-container
+        label 负责人邮箱
+        input
+      md-button
+        label 添加

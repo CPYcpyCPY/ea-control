@@ -1,0 +1,806 @@
+pi@raspberrypi ~/Dylan/ea-tester $ sudo DEBUG=ea* node bin/test
+  ea:tester mock-gpio:  +0ms false
+connected to socket.io server
+  ea:tester ********** on-test-start:  +1m { testPackage: 'driven-test-plans',
+  packageName: '../node_modules/midea-kitchen-tests/bin/b36',
+  testName: 'soak' }
+{ testPackage: 'driven-test-plans',
+  packageName: '../node_modules/midea-kitchen-tests/bin/b36',
+  testName: 'soak' }
+  ea:tester ********** test-plan:  +303ms { plan: 
+   { name: '洗碗机自动洗功能测试',
+     descriptionUrl: 'http://hcp.sysu.edu.cn/download/attachments/14746348/%E6%B4%97%E6%B6%A4%E6%97%B6%E5%BA%8F.xls?version=1&modificationDate=1453808987755&api=v2',
+     pins: 
+      { DI1: '排水阀',
+        DI2: '进水阀',
+        DI3: '双速洗涤泵高速',
+        DI4: '双速洗涤泵低速',
+        DI5: [Object],
+        DI7: '加热管',
+        DI8: '分配器',
+        DI9: '再生阀',
+        AO1: [Object],
+        AO2: '浊度传感器',
+        DO1: [Object],
+        DPO1: [Object],
+        DPO2: [Object] },
+     parts: { '双速泵': [Object] },
+     timeTolerance: 10000,
+     steps: 
+      [ [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object] ] },
+  drivenFn: [Function] }
+listen-modbus-serial-for-report!
+初始化加热管~~~ @温度， 25
+各control-step的信号源spec:
+{ on: true,
+  off: false,
+  name: '排水阀',
+  startTimeout: 10000,
+  holdTime: 45000,
+  endTimeout: 55000 }
+各control-step的信号源spec:
+{ on: true,
+  off: false,
+  name: '进水阀',
+  startTimeout: 10000,
+  holdTime: 110000,
+  endTimeout: 120000 }
+各control-step的信号源spec:
+{ on: true,
+  off: false,
+  name: '分水阀',
+  startTimeout: 10000,
+  holdTime: 13104,
+  endTimeout: 33104 }
+各control-step的信号源spec:
+{ on: true,
+  off: false,
+  name: '双速洗涤泵高速',
+  startTimeout: 10000,
+  holdTime: 300000,
+  endTimeout: 310000 }
+各control-step的信号源spec:
+{ on: true,
+  off: false,
+  name: '排水阀',
+  startTimeout: 10000,
+  holdTime: 45000,
+  endTimeout: 55000 }
+步骤: 启动
+  fall-through-start : undefined
+  fall-through-end : undefined
+  overlap-start : undefined
+  overlap-end : undefined
+  has-overlap-with-next-step : undefined
+  has-overlap-with-prev-step : undefined
+步骤: 排水
+  fall-through-start : false
+  fall-through-end : false
+  overlap-start : false
+  overlap-end : true
+  has-overlap-with-next-step : true
+  has-overlap-with-prev-step : false
+步骤: 进水
+  fall-through-start : false
+  fall-through-end : false
+  overlap-start : true
+  overlap-end : true
+  has-overlap-with-next-step : true
+  has-overlap-with-prev-step : true
+步骤: 频率检测
+  fall-through-start : false
+  fall-through-end : false
+  overlap-start : true
+  overlap-end : true
+  has-overlap-with-next-step : true
+  has-overlap-with-prev-step : true
+步骤: 高速洗涤
+  fall-through-start : false
+  fall-through-end : false
+  overlap-start : true
+  overlap-end : true
+  has-overlap-with-next-step : true
+  has-overlap-with-prev-step : true
+步骤: 排水
+  fall-through-start : false
+  fall-through-end : false
+  overlap-start : true
+  overlap-end : false
+  has-overlap-with-next-step : false
+  has-overlap-with-prev-step : true
+步骤: 结束
+  fall-through-start : undefined
+  fall-through-end : undefined
+  overlap-start : undefined
+  overlap-end : undefined
+  has-overlap-with-next-step : undefined
+  has-overlap-with-prev-step : undefined
+开始执行测试：'洗碗机自动洗功能测试'
+promise-while repeating, status is true
+@更新:  250
+温度:  25
+set AO of 0
+  ea:pin write pin AO1 with value 250 succeesfully +1s
+repeating
+promise-while repeating, status is true
+set DO of 0
+  ea:pin write pin DO1 with value false succeesfully +26ms
+repeating
+promise-while repeating, status is true
+set DO of 257
+  ea:pin write pin DPO2 with value true succeesfully +15ms
+repeating
+promise-while repeating, status is false
+协议事件  test-started :  { time: 1473658680959 }
+executing Abstract-step start
+协议事件  step-status :  { name: '启动', status: 'pending', id: 1 }
+协议事件  human-step :  { step: '启动' }
+协议事件  step-status :  { name: '启动', status: 'active', id: 1 }
+启动 is-fall-through-start undefined
+启动 is-fall-through-end true
+协议事件  step-status :  { name: '启动', status: 'ended', id: 1, timeUsed: 24 }
+协议事件  step-status :  { name: '启动', status: 'pass', id: 1 }
+
+协议事件  step-status :  { name: '排水', status: 'pending', id: 2 }
+  ea:tester name: 排水阀 address: 11, waiting value: true, timeout: , Infinity, is-fall-through: , false +96ms
+GPIO name: 排水阀 address: 11, value: true, time: 1473658702415
+  ea:tester name: 排水阀 address: 11, expect: true, actual: true +21s
+协议事件  step-status :  { name: '排水', status: 'active', id: 2 }
+因为overlap 进水 会在 排水 后 35000 开始
+  ea:tester name: 排水阀 address: 11, waiting value: false, timeout: , 55000, is-fall-through: , false +10ms
+协议事件  step-status :  { name: '进水', status: 'pending', id: 3 }
+  ea:tester name: 进水阀 address: 12, waiting value: true, timeout: , 20000, is-fall-through: , false +35s
+GPIO name: 进水阀 address: 12, value: true, time: 1473658747204
+  ea:tester name: 进水阀 address: 12, expect: true, actual: true +10s
+  ea:pin default-frequency:  +7ms 5
+  ea:pin frequency:  +1ms 5
+  ea:pin high-interval: 100, low-interval: 100 +1ms
+协议事件  step-status :  { name: '进水', status: 'active', id: 3 }
+  ea:pin counter: 1 +9ms
+GPIO name: 排水阀 address: 11, value: false, time: 1473658747354
+  ea:tester name: 排水阀 address: 11, expect: false, actual: false +126ms
+排水 执行时间: 44900, 期望执行时间: 45000, 允许误差: 14500, 按时结束: true
+协议事件  step-status :  { name: '排水', status: 'ended', id: 2, timeUsed: 44900 }
+协议事件  step-status :  { name: '排水', status: 'pass', id: 2 }
+
+因为overlap 频率检测 会在 进水 后 100000 开始
+  ea:tester name: 进水阀 address: 12, waiting value: false, timeout: , 120000, is-fall-through: , false +20ms
+  ea:pin counter: 2 +63ms
+  ea:pin counter: 3 +205ms
+  ea:pin counter: 4 +205ms
+  ea:pin counter: 5 +204ms
+  ea:pin counter: 6 +206ms
+  ea:pin counter: 7 +205ms
+  ea:pin counter: 8 +206ms
+  ea:pin counter: 9 +211ms
+  ea:pin counter: 10 +209ms
+  ea:pin counter: 11 +208ms
+  ea:pin counter: 12 +206ms
+  ea:pin counter: 13 +207ms
+  ea:pin counter: 14 +211ms
+  ea:pin counter: 15 +208ms
+  ea:pin counter: 16 +204ms
+  ea:pin counter: 17 +205ms
+  ea:pin counter: 18 +204ms
+  ea:pin counter: 19 +210ms
+  ea:pin counter: 20 +213ms
+  ea:pin counter: 21 +203ms
+  ea:pin counter: 22 +205ms
+  ea:pin counter: 23 +204ms
+  ea:pin counter: 24 +206ms
+  ea:pin counter: 25 +208ms
+  ea:pin counter: 26 +204ms
+  ea:pin counter: 27 +204ms
+  ea:pin counter: 28 +205ms
+  ea:pin counter: 29 +203ms
+  ea:pin counter: 30 +229ms
+  ea:pin counter: 31 +204ms
+  ea:pin counter: 32 +208ms
+  ea:pin counter: 33 +212ms
+  ea:pin counter: 34 +205ms
+  ea:pin counter: 35 +204ms
+  ea:pin counter: 36 +207ms
+  ea:pin counter: 37 +204ms
+  ea:pin counter: 38 +207ms
+  ea:pin counter: 39 +204ms
+  ea:pin counter: 40 +205ms
+  ea:pin counter: 41 +204ms
+  ea:pin counter: 42 +204ms
+  ea:pin counter: 43 +204ms
+  ea:pin counter: 44 +206ms
+  ea:pin counter: 45 +205ms
+  ea:pin counter: 46 +204ms
+  ea:pin counter: 47 +203ms
+  ea:pin counter: 48 +209ms
+  ea:pin counter: 49 +203ms
+  ea:pin counter: 50 +204ms
+  ea:pin counter: 51 +205ms
+  ea:pin counter: 52 +204ms
+  ea:pin counter: 53 +203ms
+  ea:pin counter: 54 +203ms
+  ea:pin counter: 55 +205ms
+  ea:pin counter: 56 +212ms
+  ea:pin counter: 57 +205ms
+  ea:pin counter: 58 +204ms
+  ea:pin counter: 59 +203ms
+  ea:pin counter: 60 +203ms
+  ea:pin counter: 61 +203ms
+  ea:pin counter: 62 +208ms
+  ea:pin counter: 63 +222ms
+  ea:pin counter: 64 +206ms
+  ea:pin counter: 65 +213ms
+  ea:pin counter: 66 +210ms
+  ea:pin counter: 67 +211ms
+  ea:pin counter: 68 +204ms
+  ea:pin counter: 69 +203ms
+  ea:pin counter: 70 +204ms
+  ea:pin counter: 71 +203ms
+  ea:pin counter: 72 +204ms
+  ea:pin counter: 73 +203ms
+  ea:pin counter: 74 +203ms
+  ea:pin counter: 75 +206ms
+  ea:pin counter: 76 +205ms
+  ea:pin counter: 77 +205ms
+  ea:pin counter: 78 +203ms
+  ea:pin counter: 79 +204ms
+  ea:pin counter: 80 +203ms
+  ea:pin counter: 81 +203ms
+  ea:pin counter: 82 +204ms
+  ea:pin counter: 83 +203ms
+  ea:pin counter: 84 +203ms
+  ea:pin counter: 85 +204ms
+  ea:pin counter: 86 +203ms
+  ea:pin counter: 87 +204ms
+  ea:pin counter: 88 +205ms
+  ea:pin counter: 89 +203ms
+  ea:pin counter: 90 +204ms
+  ea:pin counter: 91 +204ms
+  ea:pin counter: 92 +203ms
+  ea:pin counter: 93 +203ms
+  ea:pin counter: 94 +202ms
+  ea:pin counter: 95 +205ms
+  ea:pin counter: 96 +204ms
+  ea:pin counter: 97 +207ms
+  ea:pin counter: 98 +205ms
+  ea:pin counter: 99 +213ms
+  ea:pin counter: 100 +210ms
+  ea:pin counter: 101 +203ms
+  ea:pin counter: 102 +203ms
+  ea:pin counter: 103 +203ms
+  ea:pin counter: 104 +203ms
+  ea:pin counter: 105 +204ms
+  ea:pin counter: 106 +203ms
+  ea:pin counter: 107 +203ms
+  ea:pin counter: 108 +203ms
+  ea:pin counter: 109 +203ms
+  ea:pin counter: 110 +203ms
+  ea:pin counter: 111 +203ms
+  ea:pin counter: 112 +202ms
+  ea:pin counter: 113 +204ms
+  ea:pin counter: 114 +204ms
+  ea:pin counter: 115 +204ms
+  ea:pin counter: 116 +202ms
+  ea:pin counter: 117 +211ms
+  ea:pin counter: 118 +203ms
+  ea:pin counter: 119 +203ms
+  ea:pin counter: 120 +203ms
+  ea:pin counter: 121 +203ms
+  ea:pin counter: 122 +203ms
+  ea:pin counter: 123 +203ms
+  ea:pin counter: 124 +203ms
+  ea:pin counter: 125 +203ms
+  ea:pin counter: 126 +203ms
+  ea:pin counter: 127 +203ms
+  ea:pin counter: 128 +205ms
+  ea:pin counter: 129 +204ms
+  ea:pin counter: 130 +204ms
+  ea:pin counter: 131 +203ms
+  ea:pin counter: 132 +204ms
+  ea:pin counter: 133 +203ms
+  ea:pin counter: 134 +204ms
+  ea:pin counter: 135 +204ms
+  ea:pin counter: 136 +203ms
+  ea:pin counter: 137 +203ms
+  ea:pin counter: 138 +204ms
+  ea:pin counter: 139 +204ms
+  ea:pin counter: 140 +204ms
+  ea:pin counter: 141 +203ms
+  ea:pin counter: 142 +203ms
+  ea:pin counter: 143 +203ms
+  ea:pin counter: 144 +203ms
+  ea:pin counter: 145 +204ms
+  ea:pin counter: 146 +202ms
+  ea:pin counter: 147 +205ms
+  ea:pin counter: 148 +205ms
+  ea:pin counter: 149 +203ms
+  ea:pin counter: 150 +204ms
+  ea:pin counter: 151 +203ms
+  ea:pin counter: 152 +204ms
+  ea:pin counter: 153 +204ms
+  ea:pin counter: 154 +204ms
+  ea:pin counter: 155 +203ms
+  ea:pin counter: 156 +204ms
+  ea:pin counter: 157 +203ms
+  ea:pin counter: 158 +205ms
+  ea:pin counter: 159 +202ms
+  ea:pin counter: 160 +203ms
+  ea:pin counter: 161 +205ms
+  ea:pin counter: 162 +206ms
+  ea:pin counter: 163 +205ms
+  ea:pin counter: 164 +204ms
+  ea:pin counter: 165 +203ms
+  ea:pin counter: 166 +205ms
+  ea:pin counter: 167 +204ms
+  ea:pin counter: 168 +207ms
+  ea:pin counter: 169 +203ms
+  ea:pin counter: 170 +203ms
+  ea:pin counter: 171 +203ms
+  ea:pin counter: 172 +204ms
+  ea:pin counter: 173 +203ms
+  ea:pin counter: 174 +204ms
+  ea:pin counter: 175 +203ms
+  ea:pin counter: 176 +204ms
+  ea:pin counter: 177 +203ms
+  ea:pin counter: 178 +204ms
+  ea:pin counter: 179 +203ms
+  ea:pin counter: 180 +205ms
+  ea:pin counter: 181 +203ms
+  ea:pin counter: 182 +209ms
+  ea:pin counter: 183 +203ms
+  ea:pin counter: 184 +204ms
+  ea:pin counter: 185 +203ms
+  ea:pin counter: 186 +203ms
+  ea:pin counter: 187 +203ms
+  ea:pin counter: 188 +204ms
+  ea:pin counter: 189 +205ms
+  ea:pin counter: 190 +203ms
+  ea:pin counter: 191 +203ms
+  ea:pin counter: 192 +204ms
+  ea:pin counter: 193 +203ms
+  ea:pin counter: 194 +207ms
+  ea:pin counter: 195 +203ms
+  ea:pin counter: 196 +216ms
+  ea:pin counter: 197 +230ms
+  ea:pin counter: 198 +216ms
+  ea:pin counter: 199 +204ms
+  ea:pin counter: 200 +204ms
+  ea:pin counter: 201 +204ms
+  ea:pin counter: 202 +205ms
+  ea:pin counter: 203 +204ms
+  ea:pin counter: 204 +203ms
+  ea:pin counter: 205 +203ms
+  ea:pin counter: 206 +202ms
+  ea:pin counter: 207 +203ms
+  ea:pin counter: 208 +202ms
+  ea:pin counter: 209 +203ms
+  ea:pin counter: 210 +203ms
+  ea:pin counter: 211 +203ms
+  ea:pin counter: 212 +203ms
+  ea:pin counter: 213 +203ms
+  ea:pin counter: 214 +204ms
+  ea:pin counter: 215 +204ms
+  ea:pin counter: 216 +204ms
+  ea:pin counter: 217 +205ms
+  ea:pin counter: 218 +203ms
+  ea:pin counter: 219 +202ms
+  ea:pin counter: 220 +205ms
+  ea:pin counter: 221 +203ms
+  ea:pin counter: 222 +203ms
+  ea:pin counter: 223 +204ms
+  ea:pin counter: 224 +203ms
+  ea:pin counter: 225 +204ms
+  ea:pin counter: 226 +202ms
+  ea:pin counter: 227 +204ms
+  ea:pin counter: 228 +209ms
+  ea:pin counter: 229 +204ms
+  ea:pin counter: 230 +204ms
+  ea:pin counter: 231 +204ms
+  ea:pin counter: 232 +203ms
+  ea:pin counter: 233 +203ms
+  ea:pin counter: 234 +203ms
+  ea:pin counter: 235 +204ms
+  ea:pin counter: 236 +203ms
+  ea:pin counter: 237 +203ms
+  ea:pin counter: 238 +204ms
+  ea:pin counter: 239 +203ms
+  ea:pin counter: 240 +221ms
+  ea:pin counter: 241 +204ms
+  ea:pin counter: 242 +204ms
+  ea:pin counter: 243 +203ms
+  ea:pin counter: 244 +203ms
+  ea:pin counter: 245 +204ms
+  ea:pin counter: 246 +204ms
+  ea:pin counter: 247 +207ms
+  ea:pin counter: 248 +203ms
+  ea:pin counter: 249 +205ms
+  ea:pin counter: 250 +205ms
+  ea:pin counter: 251 +205ms
+  ea:pin counter: 252 +204ms
+  ea:pin counter: 253 +204ms
+  ea:pin counter: 254 +204ms
+  ea:pin counter: 255 +203ms
+  ea:pin counter: 256 +204ms
+  ea:pin counter: 257 +204ms
+  ea:pin counter: 258 +204ms
+  ea:pin counter: 259 +204ms
+  ea:pin counter: 260 +204ms
+  ea:pin counter: 261 +204ms
+  ea:pin counter: 262 +204ms
+  ea:pin counter: 263 +204ms
+  ea:pin counter: 264 +204ms
+  ea:pin counter: 265 +208ms
+  ea:pin counter: 266 +204ms
+  ea:pin counter: 267 +204ms
+  ea:pin counter: 268 +203ms
+  ea:pin counter: 269 +205ms
+  ea:pin counter: 270 +204ms
+  ea:pin counter: 271 +203ms
+  ea:pin counter: 272 +203ms
+  ea:pin counter: 273 +222ms
+  ea:pin counter: 274 +204ms
+  ea:pin counter: 275 +203ms
+  ea:pin counter: 276 +205ms
+  ea:pin counter: 277 +205ms
+  ea:pin counter: 278 +204ms
+  ea:pin counter: 279 +206ms
+  ea:pin counter: 280 +204ms
+  ea:pin counter: 281 +203ms
+  ea:pin counter: 282 +204ms
+  ea:pin counter: 283 +204ms
+  ea:pin counter: 284 +202ms
+  ea:pin counter: 285 +204ms
+  ea:pin counter: 286 +203ms
+  ea:pin counter: 287 +204ms
+  ea:pin counter: 288 +203ms
+  ea:pin counter: 289 +205ms
+  ea:pin counter: 290 +203ms
+  ea:pin counter: 291 +228ms
+  ea:pin counter: 292 +205ms
+  ea:pin counter: 293 +203ms
+  ea:pin counter: 294 +204ms
+  ea:pin counter: 295 +204ms
+  ea:pin counter: 296 +203ms
+  ea:pin counter: 297 +204ms
+  ea:pin counter: 298 +203ms
+  ea:pin counter: 299 +205ms
+  ea:pin counter: 300 +204ms
+  ea:pin counter: 301 +204ms
+  ea:pin counter: 302 +203ms
+  ea:pin counter: 303 +204ms
+  ea:pin counter: 304 +205ms
+  ea:pin counter: 305 +204ms
+  ea:pin counter: 306 +204ms
+  ea:pin counter: 307 +205ms
+  ea:pin counter: 308 +206ms
+  ea:pin counter: 309 +210ms
+  ea:pin counter: 310 +204ms
+  ea:pin counter: 311 +215ms
+  ea:pin counter: 312 +203ms
+  ea:pin counter: 313 +204ms
+  ea:pin counter: 314 +204ms
+  ea:pin counter: 315 +202ms
+  ea:pin counter: 316 +204ms
+  ea:pin counter: 317 +204ms
+  ea:pin counter: 318 +203ms
+  ea:pin counter: 319 +205ms
+  ea:pin counter: 320 +203ms
+  ea:pin counter: 321 +203ms
+  ea:pin counter: 322 +204ms
+  ea:pin counter: 323 +203ms
+  ea:pin counter: 324 +204ms
+  ea:pin counter: 325 +203ms
+  ea:pin counter: 326 +204ms
+  ea:pin counter: 327 +206ms
+  ea:pin counter: 328 +204ms
+  ea:pin counter: 329 +205ms
+  ea:pin counter: 330 +204ms
+  ea:pin counter: 331 +203ms
+  ea:pin counter: 332 +204ms
+  ea:pin counter: 333 +204ms
+  ea:pin counter: 334 +203ms
+  ea:pin counter: 335 +209ms
+  ea:pin counter: 336 +204ms
+  ea:pin counter: 337 +203ms
+  ea:pin counter: 338 +204ms
+  ea:pin counter: 339 +204ms
+  ea:pin counter: 340 +202ms
+  ea:pin counter: 341 +204ms
+  ea:pin counter: 342 +204ms
+  ea:pin counter: 343 +204ms
+  ea:pin counter: 344 +204ms
+  ea:pin counter: 345 +204ms
+  ea:pin counter: 346 +202ms
+  ea:pin counter: 347 +205ms
+  ea:pin counter: 348 +203ms
+  ea:pin counter: 349 +204ms
+  ea:pin counter: 350 +207ms
+  ea:pin counter: 351 +205ms
+  ea:pin counter: 352 +203ms
+  ea:pin counter: 353 +204ms
+  ea:pin counter: 354 +203ms
+  ea:pin counter: 355 +204ms
+  ea:pin counter: 356 +204ms
+  ea:pin counter: 357 +203ms
+  ea:pin counter: 358 +203ms
+  ea:pin counter: 359 +203ms
+  ea:pin counter: 360 +201ms
+  ea:pin counter: 361 +203ms
+  ea:pin counter: 362 +203ms
+  ea:pin counter: 363 +203ms
+  ea:pin counter: 364 +202ms
+  ea:pin counter: 365 +203ms
+  ea:pin counter: 366 +202ms
+  ea:pin counter: 367 +203ms
+  ea:pin counter: 368 +204ms
+  ea:pin counter: 369 +203ms
+  ea:pin counter: 370 +203ms
+  ea:pin counter: 371 +203ms
+  ea:pin counter: 372 +203ms
+  ea:pin counter: 373 +202ms
+  ea:pin counter: 374 +204ms
+  ea:pin counter: 375 +215ms
+  ea:pin counter: 376 +205ms
+  ea:pin counter: 377 +204ms
+  ea:pin counter: 378 +210ms
+  ea:pin counter: 379 +206ms
+  ea:pin counter: 380 +203ms
+  ea:pin counter: 381 +204ms
+  ea:pin counter: 382 +203ms
+  ea:pin counter: 383 +203ms
+  ea:pin counter: 384 +204ms
+  ea:pin counter: 385 +204ms
+  ea:pin counter: 386 +204ms
+  ea:pin counter: 387 +203ms
+  ea:pin counter: 388 +204ms
+  ea:pin counter: 389 +203ms
+  ea:pin counter: 390 +204ms
+  ea:pin counter: 391 +203ms
+  ea:pin counter: 392 +204ms
+  ea:pin counter: 393 +203ms
+  ea:pin counter: 394 +204ms
+  ea:pin counter: 395 +203ms
+  ea:pin counter: 396 +204ms
+  ea:pin counter: 397 +203ms
+  ea:pin counter: 398 +202ms
+  ea:pin counter: 399 +204ms
+  ea:pin counter: 400 +204ms
+  ea:pin counter: 401 +203ms
+  ea:pin counter: 402 +203ms
+  ea:pin counter: 403 +204ms
+  ea:pin counter: 404 +203ms
+  ea:pin counter: 405 +204ms
+  ea:pin counter: 406 +203ms
+  ea:pin counter: 407 +203ms
+  ea:pin counter: 408 +204ms
+  ea:pin counter: 409 +203ms
+  ea:pin counter: 410 +203ms
+  ea:pin counter: 411 +203ms
+  ea:pin counter: 412 +203ms
+  ea:pin counter: 413 +203ms
+  ea:pin counter: 414 +204ms
+  ea:pin counter: 415 +204ms
+  ea:pin counter: 416 +203ms
+  ea:pin counter: 417 +203ms
+  ea:pin counter: 418 +203ms
+  ea:pin counter: 419 +203ms
+  ea:pin counter: 420 +204ms
+  ea:pin counter: 421 +202ms
+  ea:pin counter: 422 +203ms
+  ea:pin counter: 423 +203ms
+  ea:pin counter: 424 +204ms
+  ea:pin counter: 425 +208ms
+  ea:pin counter: 426 +203ms
+  ea:pin counter: 427 +203ms
+  ea:pin counter: 428 +204ms
+  ea:pin counter: 429 +207ms
+  ea:pin counter: 430 +203ms
+  ea:pin counter: 431 +203ms
+  ea:pin counter: 432 +203ms
+  ea:pin counter: 433 +203ms
+  ea:pin counter: 434 +203ms
+  ea:pin counter: 435 +204ms
+  ea:pin counter: 436 +203ms
+  ea:pin counter: 437 +203ms
+  ea:pin counter: 438 +204ms
+  ea:pin counter: 439 +203ms
+  ea:pin counter: 440 +204ms
+  ea:pin counter: 441 +204ms
+  ea:pin counter: 442 +203ms
+  ea:pin counter: 443 +202ms
+  ea:pin counter: 444 +203ms
+  ea:pin counter: 445 +204ms
+  ea:pin counter: 446 +203ms
+  ea:pin counter: 447 +202ms
+  ea:pin counter: 448 +204ms
+  ea:pin counter: 449 +205ms
+  ea:pin counter: 450 +203ms
+  ea:pin counter: 451 +203ms
+  ea:pin counter: 452 +203ms
+  ea:pin counter: 453 +204ms
+  ea:pin counter: 454 +203ms
+  ea:pin counter: 455 +203ms
+  ea:pin counter: 456 +202ms
+  ea:pin counter: 457 +204ms
+  ea:pin counter: 458 +204ms
+  ea:pin counter: 459 +203ms
+  ea:pin counter: 460 +203ms
+  ea:pin counter: 461 +203ms
+  ea:pin counter: 462 +205ms
+  ea:pin counter: 463 +204ms
+  ea:pin counter: 464 +202ms
+  ea:pin counter: 465 +204ms
+  ea:pin counter: 466 +203ms
+  ea:pin counter: 467 +203ms
+  ea:pin counter: 468 +204ms
+  ea:pin counter: 469 +205ms
+  ea:pin counter: 470 +203ms
+  ea:pin counter: 471 +203ms
+  ea:pin counter: 472 +203ms
+  ea:pin counter: 473 +203ms
+  ea:pin counter: 474 +204ms
+  ea:pin counter: 475 +203ms
+  ea:pin counter: 476 +204ms
+  ea:pin counter: 477 +203ms
+  ea:pin counter: 478 +204ms
+  ea:pin counter: 479 +204ms
+  ea:pin counter: 480 +203ms
+  ea:pin counter: 481 +203ms
+  ea:pin counter: 482 +203ms
+  ea:pin counter: 483 +202ms
+  ea:pin counter: 484 +204ms
+  ea:pin counter: 485 +205ms
+  ea:pin counter: 486 +221ms
+  ea:pin counter: 487 +203ms
+  ea:pin counter: 488 +204ms
+  ea:pin counter: 489 +204ms
+  ea:pin counter: 490 +203ms
+协议事件  step-status :  { name: '频率检测', status: 'pending', id: 4 }
+  ea:tester name: 分水阀 address: 16, waiting value: true, timeout: , 20000, is-fall-through: , false +189ms
+  ea:pin counter: 491 +15ms
+  ea:pin counter: 492 +205ms
+  ea:pin counter: 493 +205ms
+  ea:pin counter: 494 +204ms
+  ea:pin counter: 495 +203ms
+  ea:pin counter: 496 +203ms
+  ea:pin counter: 497 +204ms
+  ea:pin counter: 498 +203ms
+  ea:pin counter: 499 +205ms
+  ea:pin counter: 500 +204ms
+  ea:pin counter: 501 +204ms
+  ea:pin counter: 502 +202ms
+  ea:pin counter: 503 +205ms
+  ea:pin counter: 504 +202ms
+  ea:pin counter: 505 +206ms
+  ea:pin counter: 506 +204ms
+  ea:pin counter: 507 +205ms
+  ea:pin counter: 508 +203ms
+  ea:pin counter: 509 +203ms
+  ea:pin counter: 510 +204ms
+  ea:pin counter: 511 +202ms
+  ea:pin counter: 512 +205ms
+  ea:pin counter: 513 +204ms
+  ea:pin counter: 514 +203ms
+  ea:pin counter: 515 +204ms
+  ea:pin counter: 516 +202ms
+  ea:pin counter: 517 +205ms
+  ea:pin counter: 518 +204ms
+  ea:pin counter: 519 +204ms
+  ea:pin counter: 520 +203ms
+  ea:pin counter: 521 +204ms
+  ea:pin counter: 522 +203ms
+  ea:pin counter: 523 +205ms
+  ea:pin counter: 524 +205ms
+  ea:pin counter: 525 +205ms
+  ea:pin counter: 526 +203ms
+  ea:pin counter: 527 +203ms
+  ea:pin counter: 528 +205ms
+  ea:pin counter: 529 +203ms
+  ea:pin counter: 530 +203ms
+  ea:pin counter: 531 +204ms
+  ea:pin counter: 532 +203ms
+  ea:pin counter: 533 +203ms
+  ea:pin counter: 534 +204ms
+  ea:pin counter: 535 +202ms
+  ea:pin counter: 536 +205ms
+  ea:pin counter: 537 +203ms
+  ea:pin counter: 538 +203ms
+  ea:pin counter: 539 +205ms
+  ea:pin counter: 540 +203ms
+  ea:pin counter: 541 +202ms
+  ea:pin counter: 542 +204ms
+  ea:pin counter: 543 +203ms
+GPIO name: 分水阀 address: 16, value: true, time: 1473658858197
+@更新:  true
+@位置保持时长历史记录.push  { '位置': '上下', '时长': 177607, '时间戳': 1473658858201 }
+  ea:pin default-frequency:  +212ms 0.0992063492063492
+  ea:pin frequency:  +2ms 0.0992063492063492
+  ea:pin high-interval: 9979.2, low-interval: 100.79999999999927 +5ms
+  ea:pin 记忆性脉冲 value: true, has-done-time: 0, delay-time: 1000 +2ms
+  ea:tester name: 分水阀 address: 16, expect: true, actual: true +2ms
+协议事件  step-status :  { name: '频率检测', status: 'active', id: 4 }
+  ea:pin counter: 544 +22ms
+GPIO name: 进水阀 address: 12, value: false, time: 1473658858357
+  ea:tester name: 进水阀 address: 12, expect: false, actual: false +113ms
+进水 执行时间: 111140, 期望执行时间: 110000, 允许误差: 21000, 按时结束: true
+协议事件  step-status :  { name: '进水', status: 'ended', id: 3, timeUsed: 111140 }
+当前流量： 3264
+期望流量： 4000
+结果:  true
+协议事件  step-status :  { name: '进水', status: 'pass', id: 3 }
+
+重置流量计
+因为overlap 高速洗涤 会在 频率检测 后 3104 开始
+  ea:tester name: 分水阀 address: 16, waiting value: false, timeout: , 33104, is-fall-through: , false +29ms
+  ea:pin 记忆性脉冲 value: false, has-done-time: 0, delay-time: 100.79999999999927 +846ms
+  ea:pin 记忆性脉冲 value: true, has-done-time: 0, delay-time: 9979.2 +110ms
+  ea:pin counter: 1 +3ms
+协议事件  step-status :  { name: '高速洗涤', status: 'pending', id: 5 }
+  ea:tester name: 双速洗涤泵高速 address: 13, waiting value: true, timeout: , 20000, is-fall-through: , false +2s
+  ea:pin 记忆性脉冲 value: false, has-done-time: 0, delay-time: 100.79999999999927 +8s
+  ea:pin 记忆性脉冲 value: true, has-done-time: 0, delay-time: 9979.2 +103ms
+  ea:pin counter: 2 +2ms
+GPIO name: 双速洗涤泵高速 address: 13, value: true, time: 1473658869575
+  ea:tester name: 双速洗涤泵高速 address: 13, expect: true, actual: true +156ms
+协议事件  step-status :  { name: '高速洗涤', status: 'active', id: 5 }
+GPIO name: 分水阀 address: 16, value: false, time: 1473658869746
+@更新:  false
+转动时间 = 11547,  转动度数 = 412.39285714285717
+带有误差度数 = 340.39285714285717, 校正后度数 = 0
+@转动时长历史记录.push  { '时长': 11547, '转动': '上下 => 上下', '时间戳': 1473658869753 }
+@位置变更历史记录.push  { '时间': 1473658869757, '位置': '上下', '时间戳': 1473658869757 }
+  ea:pin 暂停记忆性脉冲 value: true, has-done-time: 331, delay-time: 9648.2 +179ms
+  ea:tester name: 分水阀 address: 16, expect: false, actual: false +2ms
+频率检测 执行时间: 11544, 期望执行时间: 13104, 允许误差: 21310.4, 按时结束: true
+协议事件  step-status :  { name: '频率检测', status: 'ended', id: 4, timeUsed: 11544 }
+协议事件  step-status :  { name: '频率检测', status: 'pass', id: 4 }
+
+分水阀位置记录重置
+因为overlap 排水 会在 高速洗涤 后 290000 开始
+  ea:tester name: 双速洗涤泵高速 address: 13, waiting value: false, timeout: , 310000, is-fall-through: , false +19ms
+协议事件  step-status :  { name: '排水', status: 'pending', id: 6 }
+  ea:tester name: 排水阀 address: 11, waiting value: true, timeout: , 20000, is-fall-through: , false +5m
+GPIO name: 排水阀 address: 11, value: true, time: 1473659169185
+  ea:tester name: 排水阀 address: 11, expect: true, actual: true +9s
+协议事件  step-status :  { name: '排水', status: 'active', id: 6 }
+GPIO name: 双速洗涤泵高速 address: 13, value: false, time: 1473659169355
+  ea:tester name: 双速洗涤泵高速 address: 13, expect: false, actual: false +166ms
+高速洗涤 执行时间: 299762, 期望执行时间: 300000, 允许误差: 40000, 按时结束: true
+协议事件  step-status :  { name: '高速洗涤', status: 'ended', id: 5, timeUsed: 299762 }
+要求 上下, 开始时间 1473658869595, 结束时间 1473659169357
+@位置保持时长历史记录:  [ { '位置': '上下', '时长': 177607, '时间戳': 1473658858201 } ]
+@位置变更历史记录:  [ { '时间': 1473658869757, '位置': '上下', '时间戳': 1473658869757 } ]
+@转动时长历史记录  [ { '时长': null, '转动': null, '时间戳': 1473658680593 },
+  { '时长': 11547, '转动': '上下 => 上下', '时间戳': 1473658869753 } ]
+转动到符合-待测试记录:  [ { '时间': 1473658869757, '位置': '上下', '时间戳': 1473658869757 } ]
+协议事件  step-status :  { name: '高速洗涤', status: 'pass', id: 5 }
+
+  ea:tester name: 排水阀 address: 11, waiting value: false, timeout: , 55000, is-fall-through: , false +27ms
+GPIO name: 排水阀 address: 11, value: false, time: 1473659214335
+  ea:tester name: 排水阀 address: 11, expect: false, actual: false +45s
+排水 执行时间: 45149, 期望执行时间: 45000, 允许误差: 14500, 按时结束: true
+协议事件  step-status :  { name: '排水', status: 'ended', id: 6, timeUsed: 45149 }
+要求 不变, 开始时间 1473659169194, 结束时间 1473659214343
+@位置保持时长历史记录:  [ { '位置': '上下', '时长': 177607, '时间戳': 1473658858201 } ]
+@位置变更历史记录:  [ { '时间': 1473658869757, '位置': '上下', '时间戳': 1473658869757 } ]
+@转动时长历史记录  [ { '时长': null, '转动': null, '时间戳': 1473658680593 },
+  { '时长': 11547, '转动': '上下 => 上下', '时间戳': 1473658869753 } ]
+转动到符合-待测试记录:  []
+协议事件  step-status :  { name: '排水', status: 'pass', id: 6 }
+
+executing Abstract-step start
+协议事件  step-status :  { name: '结束', status: 'pending', id: 7 }
+协议事件  human-step :  { step: '结束' }
+协议事件  step-status :  { name: '结束', status: 'active', id: 7 }
+结束 is-fall-through-start undefined
+结束 is-fall-through-end true
+协议事件  step-status :  { name: '结束', status: 'ended', id: 7, timeUsed: 4 }
+协议事件  step-status :  { name: '结束', status: 'pass', id: 7 }
+
+协议事件  test-success :  { time: 1473659214381 }
+

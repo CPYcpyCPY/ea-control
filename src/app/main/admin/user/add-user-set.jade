@@ -1,0 +1,16 @@
+md-dialog(aria-label='add-user-set' flex=50)
+  md-toolbar.md-accent
+    .md-toolbar-tools
+      | 批量添加用户
+    span(flex)
+  .content.md-padding(layout='column')
+    form(layout='column')
+      md-input-container
+        label 数量
+        input
+      md-input-container
+        label 组织
+        md-select(ng-model='companies')
+          md-option(ng-repeat='company in companies' value='{{company.name}}') {{ company.name }}
+      md-button
+        label 批量添加

@@ -1,0 +1,79 @@
+mixin head
+  div.header.md-accent-bg(layout='column' layout-align='start start')
+    md-button.return(layout layout-align='start center' ng-click="vm.returnToBoxList()")
+      md-icon.s16.separator(md-font-icon='icon-chevron-left')
+      span.breadcrumb 返回 测试盒列表
+    .title 测试盒详情
+
+mixin summary
+  .md-headline.mt-35.mb-5.ml-20 基本信息
+  div.md-whiteframe-2dp.m-10(layout='row' layout-align='space-between center' layout-wrap)
+    div(flex='50' layout='row' layout-align='space-around center')
+      p.md-subhead.pl-20(flex) 盒号：
+        span &nbsp; {{ vm.box.id }}
+      p.md-subhead.pl-20(flex) 累计测试：
+        span &nbsp; {{ vm.box.executions.length }}
+    div(flex='50' layout-align='space-around center' ng-if='!vm.box.executions.length == 0 || vm.box.executions.length == 1 && vm.box.workingStatus == "busy"')
+      div(layout='row' ng-if='vm.box.executions.length == 1')
+        p.md-subhead.pl-20(flex) 上次测试：
+          span &nbsp; {{ vm.box.executions[0].testPlan.name }}
+        p.md-subhead.pl-20(flex) 上次结果：
+          span &nbsp; {{ vm.box.executions[0].result }}
+      div(layout='row' ng-if='vm.box.executions.length >= 2 && vm.box.workingStatus == "busy"')
+        p.md-subhead.pl-20(flex) 上次测试：
+          span &nbsp; {{ vm.box.executions[vm.box.executions.length - 2].testPlan.name }}
+        p.md-subhead.pl-20(flex) 上次结果：
+          span &nbsp; {{ vm.box.executions[vm.box.executions.length - 2].result }}
+      div(layout='row' ng-if='vm.box.executions.length >= 2 && vm.box.workingStatus == "idle"')
+        p.md-subhead.pl-20(flex) 上次测试：
+          span &nbsp; {{ vm.box.executions[vm.box.executions.length - 1].testPlan.name }}
+        p.md-subhead.pl-20(flex) 上次结果：
+          span &nbsp; {{ vm.box.executions[vm.box.executions.length - 1].result }}
+    div(flex='75' layout='row' layout-align='space-around center')
+      p.md-subhead.pl-20(flex) 当前状态：
+        span &nbsp; {{ vm.box.workingStatus }}
+      p.md-subhead.pl-20(flex ng-if='vm.box.executions.length !== 0 && vm.box.workingStatus == "busy"') 测试计划：
+        span &nbsp; {{ vm.box.executions[vm.box.executions.length - 1].testPlan.name }}
+      p.md-subhead.pl-20(flex ng-if='vm.box.executions.length !== 0 && vm.box.workingStatus == "busy"') 测试员：
+        span &nbsp; {{ vm.box.executions[vm.box.executions.length - 1].executionCreator.username }}
+
+mixin box-execution-history
+   .md-headline.mt-35.mb-5.ml-20 执行记录
+   .white-bg.md-whiteframe-2dp.m-10
+      +history-table
+
+mixin history-table
+  table.dataTable.row-border.hover(datatable='ng', dt-options='vm.dtOptions')
+    thead
+      tr
+        th.secondary-text
+          .table-header
+            span.column-title 测试计划
+        th.secondary-text
+          .table-header
+            span.column-title 测试员
+        th.secondary-text
+          .table-header
+            span.column-title 结果
+        th.secondary-text
+          .table-header
+            span.column-title 开始时间
+        th.secondary-text
+          .table-header
+            span.column-title 结束时间
+
+      tbody
+        tr(ng-repeat='execution in ::vm.box.executions track by $index' ng-click="lookExecDetail(vm.box, execution._id, execution.testPlan._id)")
+          td {{ execution.testPlan.name }}
+          td {{ execution.executionCreator.username }}
+          td(ng-if='execution.result') {{ execution.result }}
+          td(ng-if='!execution.result') 暂无测试结果
+          td {{ execution.startTime | dateTimeFull }}
+          td(ng-if='execution.endTime') {{ execution.endTime | dateTimeFull }}
+          td(ng-if='!execution.endTime') 暂无
+
+#test-box-detail.page-layout.simple.fullwidth.doc-page.element-doc-page
+  +head
+  +summary
+  +box-execution-history
+

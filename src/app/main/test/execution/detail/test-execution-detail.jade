@@ -1,0 +1,96 @@
+mixin head
+  .head.header.md-accent-bg(layout='column' layout-align='start start')
+    md-button.return(layout layout-align='start center' ng-click="vm.returnToBoxDetail()")
+      md-icon.s16.separator(md-font-icon='icon-chevron-left')
+      span.breadcrumb 返回 测试盒详情
+    .title 测试执行详情
+
+mixin summary
+  .summary(flex='40')
+    .md-headline.mt-35.ml-20 基本信息
+    .md-whiteframe-2dp.m-15(layout='column' layout-align='center start' layout-wrap)
+      p.md-subhead.pl-20 测试盒：
+        span &nbsp; {{ vm.execution.eaBox.name }}
+      p.md-subhead.pl-20 测试名称：
+        span &nbsp; {{ vm.execution.testPlan.name }}
+      p.md-subhead.pl-20 测试员：
+        span &nbsp; {{ vm.execution.executionCreator.username }}
+      p.md-subhead.pl-20 开始时间：
+        span &nbsp; {{ vm.execution.startTime | dateTimeFull }}
+      p.md-subhead.pl-20 结束时间：
+        span &nbsp; {{ vm.execution.endTime | dateTimeFull }}
+      p.md-subhead.pl-20 测试结果：
+        span &nbsp; {{ vm.execution.result }}
+
+mixin circuit-board
+  .circuit-board(flex)
+    .md-headline.mt-35.ml-20 电控板
+    .md-whiteframe-2dp.m-15.p-20(layout='row' layout-align='center center')
+      .input-pin-lines.md-subhead(layout='column' layout-align='end center')
+        .pin.mb-15(flex layout layout-align='end center' ng-repeat='pin in vm.inputPins')
+          span.ph-5 {{ pin.name }}
+      .board.md-headline.pv-100(flex='30' layout layout-align='center center')
+        span 电控板
+      .output-pin-lines.md-subhead(layout='column' layout-align='start center')
+        .pin.mb-15(flex layout layout-align='start center' ng-repeat='pin in vm.outputPins')
+          span.ph-5 {{ pin.name }}
+
+      .input-pin-names.md-subhead
+        .mb-15(layout='column' layout-align='start center' ng-repeat='pin in vm.inputPins')
+          span.pin-name {{ pin.pin }}
+      .input-pin-datas.md-subhead
+        .mb-15(layout='column' layout-align='start center' ng-repeat='pin in vm.inputPins')
+          span.pin-data {{ pin.data }}
+      .output-pin-names.md-subhead
+        .mb-15(layout='column' layout-align='start center' ng-repeat='pin in vm.outputPins')
+          span.pin-name {{ pin.pin }}
+      .output-pin-datas.md-subhead
+        .mb-15(layout='column' layout-align='start center' ng-repeat='pin in vm.outputPins')
+          span.pin-data {{ pin.data }}
+
+mixin step-progress
+  .step-progress
+    .md-headline.mt-35.ml-20 测试进度
+    div.md-whiteframe-2dp.m-15.p-10(layout layout-align='space-between center')
+      span.md-title.mr-10 0%
+      md-progress-linear.md-primary(md-mode='determinate' ng-value='vm.testProgress')
+      span.md-title.ml-10 {{ vm.testProgress }}%
+
+mixin step-detail
+  .step-detail.mt-35.mb-5.ml-20(layout layout-align='start center')
+    .md-headline 详细步骤
+    md-button.download(ng-click="vm.downloadScript()" ng-disable='vm.execution.result')
+      md-icon.md-accent(md-font-icon="icon-download")
+      span 下载测试数据
+
+  div.md-whiteframe-2dp.m-15
+    .execution-steps.mh-20(layout='row' layout-align='space-between center' layout-wrap)
+      .execution-step.mb-10.mt-20.pv-30(ng-repeat='step in vm.stepDetail' class="{{step.status}}" flex='19' layout='row' layout-align='space-between')
+        //- .seq-no.md-title(flex='15') {{step.id}}
+        .name.md-title.pl-20(flex) {{step.name}}
+
+        .estimate-execution-time.md-title(flex='45')
+          span.md-title.ended(ng-if='step.status === "pending" && !step.capacity') {{step.expectedStepDuration | duration }}
+          span.md-title(ng-if='step.status === "pending" && step.capacity') {{step.capacity}}
+          span.md-title(ng-if='step.status === "active"') {{step.remainingTime | duration }}
+          span.md-title(ng-if='step.status === "ended" || step.status === "pass"') {{step.timeUsed | duration }}
+
+
+mixin waveform
+  .waveform
+    .md-headline.mt-35.ml-20 当前测试波形图
+    div.md-whiteframe-2dp.m-15.p-10(layout='column' layout-align='space-between' layout-wrap)
+      .waveform(layout='row', flex='100', layout-wrap='')
+        nvd3(options='options', data='data')
+
+
+//- ------------- 页面 -----------
+#test-execution-detail.page-layout.simple.fullwidth.doc-page.element-doc-page
+  +head
+  div(layout)
+    +summary
+    +circuit-board
+  +step-progress
+  +step-detail
+  +waveform
+

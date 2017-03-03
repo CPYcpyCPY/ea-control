@@ -1,0 +1,19 @@
+md-dialog(aria-label='add-new-user' flex=50)
+  md-toolbar.md-accent
+    .md-toolbar-tools
+      | 添加新用户
+    span(flex)
+  .content.md-padding(layout='column')
+    form(layout='column')
+      md-input-container
+        label 用户名
+        input
+      md-input-container
+        label 密码
+        input(type='password')
+      md-input-container
+        label 组织
+        md-select(ng-model='companies')
+          md-option(ng-repeat='company in companies' value='{{company.name}}') {{ company.name }}
+      md-button
+        label 添加

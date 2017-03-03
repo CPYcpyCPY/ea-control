@@ -1,0 +1,62 @@
+include ./test-boxes-front-side.partial.jade
+
+mixin box
+  ms-widget-front.h-170.p-16
+    +headline
+    +front-content
+
+  ms-widget-back.p-16
+    +back-content
+
+mixin back-content
+  .pb-8
+    +in-testing-back
+    +idle-back
+
+mixin head
+  #test-box-list.page-layout.simple.fullwidth.doc-page.element-doc-page
+    .header.md-accent-bg(layout='row', layout-align='start center')
+      .title 测试盒列表
+
+mixin in-testing-back
+  div(ng-if='box.execution && !box.execution.result' layout='column' layout-align='space-between')
+    +flip-back
+    .mt-30
+      .testing-step.md-subhead
+        span.label 当前正在执行步骤:
+
+        span.content {{ box.currentStep.name }}
+
+mixin idle-back
+  div(ng-if='box.execution && box.execution.result' layout='column' layout-align='space-between')
+    +flip-back
+    div(layout='row', layout-align='space-between center').mt-30
+      .test-plan-name.md-subhead
+        span.label 已完成测试:
+
+        span.content {{box.plan.name }}
+    .mt-20(layout='row', layout-align='space-between center').mr-20
+      .end-time
+        span.label 完成时间:
+        span.content {{box.execution.endTime | dateTimeShort }}
+      .result
+        span.label 结果:
+        span.content {{box.execution.result}}
+    .mt-10(layout='row', layout-align='space-between center' ng-if='box.execution.reason')
+      .reason
+        span.label 失败步骤:
+        span.content {{box.execution.currentStep.name}}
+
+mixin flip-back
+  .flip-to-front
+    md-button.md-icon-button(ng-click='flipWidget()', aria-label='Flip widget')
+      md-icon.s16(md-font-icon='icon-close')
+
+
+//- 测试盒列表
+#test-boxes-list(layout='column')
+  div.page-layout.simple.fullwidth.doc-page.element-doc-page
+    +head
+  #test-boxes(layout="row" flex='100', layout-wrap='')
+    ms-widget.box.white-bg(flippable='true', layout='column', flex='100', flex-gt-xs='50', flex-gt-md='25' ng-repeat='box in vm.boxes')
+      +box

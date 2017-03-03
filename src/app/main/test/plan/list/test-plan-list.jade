@@ -1,0 +1,61 @@
+mixin head
+  div.header.md-accent-bg(layout layout-align="start center")
+    .title 测试计划列表
+
+mixin createPlanButton
+  .create-plan-button
+    md-button(aria-label="新建测试计划" ui-sref="app.test.create-plan({userId: vm.current-user-id})")
+      md-icon.md-accent(md-font-icon='icon-plus-circle', aria-label="新建测试计划")
+      span.ml-10.new-test-plan 新建测试计划
+
+
+#test-plan-list.page-layout.simple.fullwidth.doc-page.element-doc-page
+  +head
+  .plan-list-table.content
+    .white-bg.md-whiteframe-2dp
+      table.dataTable.row-border.hover(datatable='ng', dt-options='vm.dtOptions')
+        +createPlanButton
+        thead
+          tr
+            th.secondary-text
+              .table-header
+                span.column-title 名称
+            th.secondary-text
+              .table-header
+                span.column-title 类型
+            th.secondary-text
+              .table-header
+                span.column-title 状态
+            th.secondary-text
+              .table-header
+                span.column-title 使用次数
+            th.secondary-text
+              .table-header
+                span.column-title 用时
+            th.secondary-text
+              .table-header
+                span.column-title 人工操作
+            th.secondary-text
+              .table-header
+                span.column-title 成功率
+            th.secondary-text
+              .table-header
+                span.column-title 计划创建者
+            th.secondary-text
+              .table-header
+                span.column-title 脚本编辑者
+
+        tbody
+          tr(ng-repeat='plan in vm.plans', ng-click='vm.goToPlanDetail(plan._id)')
+            td {{ plan.name }}
+            td {{ plan.type }}
+            td {{ plan.status }}
+            td {{ plan.usedFrequency }}
+            td(ng-if='plan.status !== "editable"') {{ plan.expectedExecuteDuration }}
+            td(ng-if='plan.status === "editable"') 暂无测试脚本
+            td {{ plan.manualOperationFrequency }}
+            td {{ plan.successRate }}
+            td {{ plan.docCreator.username }}
+            td(ng-if='plan.status !== "editable"') {{ plan.scriptCreator.username }}
+            td(ng-if='plan.status === "editable"') 暂无编辑者
+

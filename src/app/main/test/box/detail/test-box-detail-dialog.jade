@@ -1,0 +1,51 @@
+mixin summary
+  .mt-10.ph-10(layout='row', layout-align='space-between center')
+    dl
+      .box-name
+        dt 盒号
+        dd {{ box.name }}
+    dl
+      .executions
+        dt 测试次数
+        dd {{ box.executions.length }}
+    dl(ng-if='box.currentExecution')
+      .last-execution-name
+        dt 上一次测试
+        dd {{ box.currentExecution.testPlan.name }}
+    dl(ng-if='box.currentExecution')
+      .last-execution-result
+        dt 结果
+        dd {{ box.currentExecution.result }}
+
+mixin current-test-execution
+  .mt-10.ph-10(ng-if='box.currentExecution' layout='row', layout-align='space-between center')
+    dl
+      .current-status
+        dt 当前状态
+        dd 测试中
+    dl
+      .current-test-plan
+        dt 测试计划
+        dd {{ box.currentExecution.testPlan.name }}
+    dl
+      .tester
+        dt 测试员
+        dd {{ box.currentExecution.executionCreator.username }}
+    dl
+      .estimate-end-time
+        dt 预计结束
+        dd {{ box.currentExecution.estimateEndTime }}
+
+mixin no-test-execution
+  .mt-20.ph-20(ng-if='!box.currentExecution' layout='row', layout-align='space-between center')
+    dl
+      .current-status
+        dt 当前状态
+        dd 无测试
+
+mixin head-front
+    +summary
+    +current-test-execution
+    +no-test-execution
+
++head-front

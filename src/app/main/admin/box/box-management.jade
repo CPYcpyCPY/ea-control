@@ -1,0 +1,42 @@
+.page-layout.simple.fullwidth.doc-page.element-doc-page
+  .header.md-accent-bg(layout='row', layout-align='space-between')
+    div(layout='column', layout-align='center start')
+      .title 测试盒管理
+
+  .content
+    .white-bg.md-whiteframe-4dp
+      table.dataTable.row-border.hover(datatable='ng', dt-options='vm.dtOptions')
+        thead
+          tr
+            th.secondary-text
+              .table-header
+                span.column-title 测试盒名称
+            th.secondary-text
+              .table-header
+                span.column-title 版本号
+            th.secondary-text
+              .table-header
+                span.column-title 序列号
+            th.secondary-text
+              .table-header
+                span.column-title 注册时间
+            th.secondary-text
+              .table-header
+                span.column-title 所属公司
+            th.secondary-text
+              .table-header
+                span.column-title 状态
+            th.secondary-text
+              .table-header
+                span.column-title 过期时间
+
+        tbody
+          tr(ng-repeat='box in vm.boxes', ng-click='vm.editBoxInfoDialog($event, box)')
+            td {{ box.name }}
+            td {{ box.productInfo.eaBoxVersion }}
+            td {{ box.productInfo.rpiSerial }}
+            td {{ box.registeDate }}
+            td {{ box.companyId }}
+            td {{ box.workingStatus }}
+            td {{ box.outOfDateTime }}
+

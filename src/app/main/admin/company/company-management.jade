@@ -1,0 +1,46 @@
+#simple-table.page-layout.simple.fullwidth.doc-page.element-doc-page
+  .header.md-accent-bg(layout='row', layout-align='space-between')
+    div(layout='column', layout-align='center start')
+      .title 组织管理
+
+  .content
+    .white-bg.md-whiteframe-4dp
+      .add-user-buttons(layout='row')
+        .add-new-user(layout="row")
+          md-button(aria-label="add-new-user", ng-click='vm.addNewCompanyDialog($event)')
+            md-icon.md-accent(md-font-icon="icon-plus-circle")
+            span.ml-10 添加新组织
+
+      table.dataTable.row-border.hover(datatable='ng', dt-options='vm.dtOptions')
+        thead
+          tr
+            th.secondary-text
+              .table-header
+                span.column-title 组织名称
+            th.secondary-text
+              .table-header
+                span.column-title 负责人
+            th.secondary-text
+              .table-header
+                span.column-title 负责人邮箱
+            th.secondary-text
+              .table-header
+                span.column-title 盒子数量（使用中/总数）
+            th.secondary-text
+              .table-header
+                span.column-title 用户数量（在线/总数）
+            th.secondary-text
+              .table-header
+                span.column-title 创建时间
+
+        tbody
+          tr(ng-repeat='company in vm.companies')
+            td {{ company.name }}
+            td {{ company.managerName }}
+            td {{ company.managerEmail }}
+            td 2/5
+            td 4/6
+            //- td {{ company.boxUsing }} / {{ company.boxSum }}
+            //- td {{ company.userOnline }} / {{ company.userSum }}
+            td {{ company.createTime }}
+

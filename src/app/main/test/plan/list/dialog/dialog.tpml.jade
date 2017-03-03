@@ -1,0 +1,33 @@
+//- from https://codepen.io/hughred22/pen/NGaXXg and http://jsfiddle.net/danialfarid/0mz6ff9o/135/
+- var fileSize = '2MB'
+
+mixin fileInput
+	div(id="script-input")
+		input(class="ng-hide" id="script" name="scriptFile" type="file" ng-model="scriptFile" ngf-max-size="#{fileSize}" ngf-select="uploadFiles($file, $invalidFiles)" required)
+		span.test-script 测试计划:
+		label(for="script" class="md-button md-raised md-primary")
+			md-icon(aria-label="上传文件" md-font-icon="icon-cloud-upload")
+			span.upload-scirpt-file 上传脚本
+		div(ng-messages="uploadScript.scriptFile.$error")
+			div.error-tips.pv-3(ng-message="maxSize") 文件大小不能大于#{fileSize}
+
+mixin general-input(label, pro, name)
+	md-input-container.md-block(flex-gt-sm)
+		label #{label}
+		input(ng-model='#{pro}' name='#{name}' ng-value="scriptFileName" required)
+
+
+md-dialog#upload-script(aria-label="Upload script dialog" flex="50")
+	form(name='uploadScript')
+		md-toolbar
+			.md-toolbar-tools
+				.h2 上传文件
+				span(flex)
+				md-button(class="md-icon-button" ng-click="cancel()")
+					md-icon(md-font-icon="icon-window-close" aria-label="Close dialog")
+		md-dialog-content
+			+general-input('脚本名称', 'scriptFileName', 'scriptFileName')
+			+fileInput
+		md-dialog-actions
+			md-button.md-accent(type="submit" ng-disabled="uploadScript.$invalid" ng-click="uploadResult(scriptFileName)" class="md-primary") 确认上传
+			md-button.md-accent(ng-click="uploadResult()" class="md-primary") 取消

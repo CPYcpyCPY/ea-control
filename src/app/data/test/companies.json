@@ -1,0 +1,30 @@
+{
+  "companies": [{
+    "_id": 1,
+    "name": "美的",
+    "managerName": "Ms. 段 弘文",
+    "managerEmail": ".40@gmail.com",
+    "createTime": "2751-07-16T08:01:18.158Z",
+    "userCount": 1,
+    "userOnlinePercentage": "15%",
+    "boxUsedPercentage": "46%"
+  }, {
+    "_id": 2,
+    "name": "海尔",
+    "managerName": "Dr. 邱 思",
+    "managerEmail": "_@gmail.com",
+    "createTime": "2772-02-15T09:15:59.492Z",
+    "userCount": 8,
+    "userOnlinePercentage": "42%",
+    "boxUsedPercentage": "67%"
+  }, {
+    "_id": 42899190,
+    "name": "格力",
+    "managerName": "蒋 嘉懿",
+    "managerEmail": ".@gmail.com",
+    "createTime": "2046-07-03T23:28:15.389Z",
+    "userCount": 8,
+    "userOnlinePercentage": "42%",
+    "boxUsedPercentage": "87%"
+  }]
+}

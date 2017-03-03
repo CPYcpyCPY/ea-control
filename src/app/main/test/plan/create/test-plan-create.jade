@@ -1,0 +1,47 @@
+- var fileSize = '2MB'
+
+mixin head
+  .header.md-accent-bg(layout="row" layout-align="space-between")
+    div(layout="column" layout-align="center")
+      .title 测试计划创建
+
+mixin input(label, pro, name, inputType)
+  md-input-container.md-block(flex-gt-sm)
+    label #{label}
+    input(type="#{inputType}" ng-model='vm.testPlan.' + '#{pro}' name='testPlan' + '#{name}' required)
+
+mixin fileInput(pro, name)
+  div(flex="50" id="upload-doc")
+    label.test-plan 测试计划:
+    label.md-button.md-accent(for="doc")
+      md-icon(aria-label="上传文件" md-font-icon="icon-cloud-upload")
+      span 选择文件
+      input(ng-hide='true' id="doc" type="file" ng-model='vm.testPlan.' + '#{pro}' name='testPlan' + '#{name}' ngf-max-size="#{fileSize}" ngf-select="vm.uploadFiles($file, $invalidFiles)" required)
+      span.file {{ vm.testPlan.doc.docName | limitNameLength }}
+    div(ng-messages="planForm.testPlanDoc.$error")
+      div.error-tips.pv-3(ng-message="maxSize") 文件大小不能大于#{fileSize}
+
+
+mixin plan-form-input
+  form.p-10(name='planForm')
+    div(layout='row')
+      +input('名称', 'name', 'Name', 'text')
+      +fileInput('doc', 'Doc')
+
+    div(layout-gt-sm='row')
+      +input('类型', 'type', 'Type', 'text')
+      +input('人工操作', 'manualOperationFrequency', 'manualOperationFrequency', 'number')
+
+mixin plan-form-buttons
+  .add-test-plan.pb-20(layout="row" layout-align='end center')
+    md-button.md-raised.md-accent.create-button(ng-disabled="planForm.$invalid" type="submit" aria-label="创建"  ng-click="vm.createPlan()") 创建
+    md-button.md-primary.cancel-button(aria-label="取消" ui-sref="app.test.plans") 取消
+
+mixin create-plan-form
+  .white-bg.md-whiteframe-2dp.m-10
+    +plan-form-input
+    +plan-form-buttons
+
+#create-test-plan.page-layout.simple.fullwidth.doc-page.element-doc-page
+  +head
+  +create-plan-form

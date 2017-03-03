@@ -1,0 +1,30 @@
+{
+  "companies": [{
+    "_id": 54372848,
+    "name": "海尔",
+    "managerName": "徐 梓晨",
+    "managerEmail": ".@hotmail.com",
+    "createTime": "2412-11-09T22:45:26.763Z",
+    "userCount": 7,
+    "userOnlinePercentage": "23%",
+    "boxUsedPercentage": "23%"
+  }, {
+    "_id": 60304366,
+    "name": "海尔",
+    "managerName": "Ms. 冯 泽洋",
+    "managerEmail": "71@hotmail.com",
+    "createTime": "2457-05-14T14:43:16.384Z",
+    "userCount": 4,
+    "userOnlinePercentage": "15%",
+    "boxUsedPercentage": "67%"
+  }, {
+    "_id": 9542226,
+    "name": "格力",
+    "managerName": "李 浩宇",
+    "managerEmail": ".@gmail.com",
+    "createTime": "3216-12-18T11:27:46.132Z",
+    "userCount": 6,
+    "userOnlinePercentage": "15%",
+    "boxUsedPercentage": "67%"
+  }]
+}

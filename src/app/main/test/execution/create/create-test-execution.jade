@@ -1,0 +1,38 @@
+//- ------------- 页面 -----------
+mixin head
+  .header.md-accent-bg(layout="row" layout-align="start center")
+    .title 新建测试执行
+
+mixin create-execution-form
+  .form-wrapper.md-whiteframe-1dp.m-10(flex='100')
+    form(name='execution' layout='column')
+      md-input-container
+        label 测试执行名称
+        input(ng-model='vm.execution.name' required)
+      md-input-container
+        label 创建人
+        input(ng-model='vm.execution.executionCreator.username' required)
+      .test-box(layout='row')
+        md-input-container(flex='90')
+          label 测试盒
+          md-select(ng-model='vm.execution.eaBox._id' required)
+            md-option(ng-repeat='box in vm.boxes' value='{{box._id}}' ng-disabled='vm.currentBox && (box._id !== vm.currentBox._id)') {{box.name}}
+              span(ng-if='!vm.currentBox && box.workingStatus.status == "busy"') (正在运行)
+        div(layout='row' layout-align='start center')
+          md-button.md-accent(class='md-raised' aria-label='Pin') 尝试连接盒子
+      md-input-container
+        label 测试文件
+        md-select(ng-model='vm.execution.testPlan._id' required)
+          md-option(ng-repeat='plan in vm.plans' value='{{plan._id}}' ng-disabled='vm.currentPlan && (plan._id !== vm.currentPlan._id)') {{plan.name}}
+      md-input-container(class="md-block")
+        label 备注
+        textarea(ng-model='vm.execution.comment' md-maxlength='200' rows='3' md-select-on-focus style='height: 100px;')
+      .buttons(layout='row' layout-align='right')
+        span(flex)
+        md-button.md-raised.md-accent(layout='row' type='submit' ng-disabled='execution.$invalid || execution.$pristine' ng-click='vm.showGuidePicture()') 提交
+        md-button.md-raised(layout='row' ng-click='vm.returnToBoxesList()') 取消
+
+#create-test-execution.page-layout.simple.fullwidth.doc-page.element-doc-page
+  +head
+  +create-execution-form
+
